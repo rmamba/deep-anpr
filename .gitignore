@@ -1,0 +1,9 @@
+.idea
+bgs/*
+cars/*
+test/*
+*.ttf
+*.npz
+*.jpg
+*.tar.gz
+__pycache__

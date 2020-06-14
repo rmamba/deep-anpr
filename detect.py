@@ -43,7 +43,9 @@ import sys
 
 import cv2
 import numpy
-import tensorflow as tf
+# import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 import common
 import model
@@ -176,16 +178,16 @@ def letter_probs_to_code(letter_probs):
 
 
 if __name__ == "__main__":
-    im = cv2.imread(sys.argv[1])
-    im_gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY) / 255.
-
-    f = numpy.load(sys.argv[2])
+    f = numpy.load(sys.argv[1])
     param_vals = [f[n] for n in sorted(f.files, key=lambda s: int(s[4:]))]
+
+    im = cv2.imread(sys.argv[2])
+    im_gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY) / 255.
 
     for pt1, pt2, present_prob, letter_probs in post_process(
                                                   detect(im_gray, param_vals)):
-        pt1 = tuple(reversed(map(int, pt1)))
-        pt2 = tuple(reversed(map(int, pt2)))
+        pt1 = tuple(reversed(list(map(int, pt1))))
+        pt2 = tuple(reversed(list(map(int, pt2))))
 
         code = letter_probs_to_code(letter_probs)
 
@@ -208,5 +210,7 @@ if __name__ == "__main__":
                     (255, 255, 255),
                     thickness=2)
 
-    cv2.imwrite(sys.argv[3], im)
-
+    if len(sys.argv) == 4:
+        cv2.imwrite(sys.argv[3], im)
+    else:
+        print(code)

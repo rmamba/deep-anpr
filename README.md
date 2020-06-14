@@ -28,7 +28,7 @@ Usage is as follows:
    network has learned enough press `Ctrl+C` and the process will write the
    weights to `weights.npz` and return.
 
-4. `./detect.py in.jpg weights.npz out.jpg`: Detect number plates in an image.
+4. `./detect.py weights.npz in.jpg out.jpg`: Detect number plates in an image.
 
 The project has the following dependencies:
 
@@ -41,3 +41,5 @@ faces.  With a large enough variety the network will learn to generalize and
 will match as yet unseen typefaces. See
 [#1](https://github.com/matthewearl/deep-anpr/issues/1) for more information.
 
+# ToDO:
+- make it detect custom licence plates which only has 5 or 6 characters
